@@ -61,6 +61,9 @@ const EditModal = (props) => {
   });
   const classes = useStyles();
   const { register, handleSubmit, control, errors, setError, setValue } = useForm();
+  const [maleRadio,setMaleRadio] = useState(false)
+  const [femaleRadio,setFemaleRadio] = useState(false)
+
   const onSubmit = (data) => {
 
     handleClose()
@@ -72,7 +75,8 @@ const EditModal = (props) => {
   useEffect(() => {
 
     setTimeout(() => {
-
+      setMaleRadio(false)
+      setFemaleRadio(false)
       const name = props.name
       let data = JSON.parse(localStorage.getItem('data'))
       data.map((item) => {
@@ -81,6 +85,11 @@ const EditModal = (props) => {
           setValue("name", item.name)
           setValue("email", item.email)
           setValue("gender", item.gender)
+          if(item.gender == "male"){
+            setMaleRadio(true)
+          }else{
+            setFemaleRadio(true)
+          }
           
           setValue("designation", item.designation)
           setValue("date", item.date)
@@ -90,6 +99,22 @@ const EditModal = (props) => {
       })
     }, 500);
   }, [props])
+
+  const onRadioButtonChange =(e)=>{
+    console.log(e.target.name)
+    console.log(e.target.checked)
+    if(e.target.value == "male" && e.target.checked == true){
+      setValue("male","male")
+      setMaleRadio(true)
+      setValue("female","")
+      setFemaleRadio(false)
+    }else if(e.target.value == "female" && e.target.checked == true){
+      setValue("female","female")
+      setFemaleRadio(e.target.checked)
+      setValue("male","")
+      setMaleRadio(false)
+    }
+  }
 
 
   return (
@@ -147,7 +172,7 @@ const EditModal = (props) => {
               error={Boolean(errors.gender)}
             >
               <FormLabel>Choose Your Gender</FormLabel>
-              <RadioGroup row name="gender">
+              <RadioGroup row name="gender" onChange={(e)=>{onRadioButtonChange(e)}}>
                 <FormControlLabel
                   value="female"
                   control={
@@ -155,7 +180,7 @@ const EditModal = (props) => {
                       inputRef={register}
                     />
                   }
-                 
+                  checked={femaleRadio}
                   label="Female"
                 />
                 <FormControlLabel
@@ -166,6 +191,10 @@ const EditModal = (props) => {
                     />
                   }
                   label="Male"
+                  checked={maleRadio}
+                  // onChange={(e)=>{setValue("male",e.target.checked)}}
+                  // onChange={(e)=>{setMaleRadio(e.target.checked)}}
+                  
                 />
               </RadioGroup>
               <FormHelperText>{errors.gender?.message}</FormHelperText>
