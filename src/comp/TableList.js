@@ -68,15 +68,10 @@ const TableList = () => {
   const [name, setName] = useState("")
 
   const [data, setData] = useState([])
-  // const [loading, setLoading] = useState(true);
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(3);
-
-  const [expand, setExpand] = useState(true);
-  const toggleAcordion = () => {
-    setExpand(false);
-  };
 
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
@@ -119,11 +114,8 @@ const TableList = () => {
   }
 
 
-
-
-
   const deleteItem = (name) => {
-    // console.log(name,"name")
+
     const filteredData = rows.filter((item) => item.name !== name);
     localStorage.setItem("data", JSON.stringify(filteredData))
     setRows(filteredData)
@@ -135,6 +127,8 @@ const TableList = () => {
       type: "error",
     });
   }
+
+
 
   const updateItem = (data, name) => {
     console.log(data, 'data')
@@ -184,9 +178,9 @@ const TableList = () => {
     }
   }, [search])
 
-  const date = (date) =>{
+  const date = (date) => {
     let dt = new Date(date)
-    return(dt.toLocaleDateString())
+    return (dt.toLocaleDateString())
   }
 
   return (
@@ -201,7 +195,7 @@ const TableList = () => {
         <Table sx={{ minWidth: 700, marginTop: 1 }} aria-label="customized table">
           <TableHead>
             <TableRow>
-              {/* <StyledTableCell>Id</StyledTableCell> */}
+
               <StyledTableCell align="center">Name</StyledTableCell>
               <StyledTableCell align="center">Email</StyledTableCell>
               <StyledTableCell align="center">Gender</StyledTableCell>
@@ -209,70 +203,55 @@ const TableList = () => {
             </TableRow>
           </TableHead>
           <TableBody></TableBody>
-          </Table>
-            {currentRecords?.map((row, index) => (
-              <>
+        </Table>
+        {currentRecords?.map((row, index) => (
+          <>
 
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    {/* <Typography></Typography> */}
-                    <StyledTableRow key={row.name}>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <StyledTableRow key={row.name}>
 
-                      <StyledTableCell  style={{ width: 200 }} align="center">{row.name}</StyledTableCell>
-                      <StyledTableCell style={{ width: 300 }} align="center">{row.email}</StyledTableCell>
-                      <StyledTableCell style={{ width: 200 }} align="center">{row.gender}</StyledTableCell>
-                      <StyledTableCell style={{ width: 250 }} align="center">
-                        <IconButton aria-label="edit" onClick={() => editItem(row.name)} color="primary">
-                          <ModeEditIcon />
-                        </IconButton>
-                        <IconButton aria-label="delete" onClick={() => deleteItem(row.name)} color="primary">
-                          <DeleteIcon />
-                        </IconButton>
-                        <IconButton aria-label="view" color="primary"><AddCircleIcon /></IconButton>
-                      </StyledTableCell>
+                  <StyledTableCell style={{ width: 200 }} align="center">{row.name}</StyledTableCell>
+                  <StyledTableCell style={{ width: 300 }} align="center">{row.email}</StyledTableCell>
+                  <StyledTableCell style={{ width: 200 }} align="center">{row.gender}</StyledTableCell>
+                  <StyledTableCell style={{ width: 250 }} align="center">
+                    <IconButton aria-label="edit" onClick={() => editItem(row.name)} color="primary">
+                      <ModeEditIcon />
+                    </IconButton>
+                    <IconButton aria-label="delete" onClick={() => deleteItem(row.name)} color="primary">
+                      <DeleteIcon />
+                    </IconButton>
+                    <IconButton aria-label="view" color="primary"><AddCircleIcon /></IconButton>
+                  </StyledTableCell>
 
-                    </StyledTableRow>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    {/* <Table>
-                          <TableBody>
-                            {rows.map((row) => (
-                              <TableRow key={row.name}>
-                                <TableCell component="th" scope="row">
-                                  {row.name}
-                                </TableCell>
-                                <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">{row.fat}</TableCell>
-                                <TableCell align="right">{row.carbs}</TableCell>
-                                <TableCell align="right">{row.protein}</TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table> */}
-                    <StyledTableRow key={row.name}>
+                </StyledTableRow>
+              </AccordionSummary>
+              <AccordionDetails>
 
-                      <StyledTableCell style={{ width: 300 }} align="center">Designation</StyledTableCell>
-                      <StyledTableCell style={{ width: 300 }} align="center">Skil</StyledTableCell>
-                      <StyledTableCell style={{ width: 300 }} align="center">Date</StyledTableCell>
-                    </StyledTableRow>
-                    <StyledTableRow key={row.name}>
+                <StyledTableRow>
 
-                      <StyledTableCell style={{ width: 300 }} align="center">{row.designation}</StyledTableCell>
-                      <StyledTableCell style={{ width: 300 }} align="center">{row.skill}</StyledTableCell>
-                      <StyledTableCell style={{ width: 300 }} align="center">{
-                      date(row.date)
+                  <StyledTableCell style={{ width: 300 }} align="center">Designation</StyledTableCell>
+                  <StyledTableCell style={{ width: 300 }} align="center">Skil</StyledTableCell>
+                  <StyledTableCell style={{ width: 300 }} align="center">Date</StyledTableCell>
+                </StyledTableRow>
+                <StyledTableRow key={row.name}>
 
-                      
-                      }</StyledTableCell>
-                    </StyledTableRow>
-                  </AccordionDetails>
-                </Accordion>``
+                  <StyledTableCell style={{ width: 300 }} align="center">{row.designation}</StyledTableCell>
+                  <StyledTableCell style={{ width: 300 }} align="center">{row.skill}</StyledTableCell>
+                  <StyledTableCell style={{ width: 300 }} align="center">{
+                    date(row.date)
 
-                {/* <StyledTableRow key={row.name}>
+
+                  }</StyledTableCell>
+                </StyledTableRow>
+              </AccordionDetails>
+            </Accordion>``
+
+            {/* <StyledTableRow key={row.name}>
 
                   <StyledTableCell align="center">{row.name}</StyledTableCell>
                   <StyledTableCell align="center">{row.email}</StyledTableCell>
@@ -289,10 +268,10 @@ const TableList = () => {
 
                 </StyledTableRow> */}
 
-              </>
-            ))}
-        
-          
+          </>
+        ))}
+
+
         <EditModal
           open={openEditModel}
           setOpen={setOpenEditModel}
